@@ -1,8 +1,4 @@
-use mockall::*;
-use mockall::predicate::*;
 use crate::my_dependency::MyDependency;
-use crate::my_dependency::MockMyDependency;
-use crate::my_dependency_impl::MyDependencyImpl;
 
 pub struct Kata {
     my_dependency: Box<dyn MyDependency>,
@@ -22,6 +18,7 @@ impl Kata {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::my_dependency::MockMyDependency;
 
     #[test]
     fn example_function_test() {
