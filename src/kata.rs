@@ -1,4 +1,7 @@
+use mockall::*;
+use mockall::predicate::*;
 use crate::my_dependency::MyDependency;
+use crate::my_dependency::MockMyDependency;
 use crate::my_dependency_impl::MyDependencyImpl;
 
 pub struct Kata {
@@ -22,9 +25,16 @@ mod tests {
 
     #[test]
     fn example_function_test() {
-        let my_dependency = Box::new(MyDependencyImpl {});
+        let mut mock = MockMyDependency::new();
+        mock.expect_get_value()
+            .with()
+            .times(1)
+            .returning(|| 0);
+        let my_dependency = Box::new(mock);
         let kata = Kata::init(my_dependency);
 
-        assert_eq!(kata.example_function(), 0);
+        let result = kata.example_function();
+
+        assert_eq!(result, 0);
     }
 }
